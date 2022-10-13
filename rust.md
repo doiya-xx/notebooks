@@ -39,6 +39,7 @@ cargo --version
 创建一个名为`project_name`的项目文件。
 
 ```shell
+# 创建应用程序项目
 cargo new project_name
 cd ./project_name # 进入项目目录
 # 创建库
@@ -81,6 +82,21 @@ cargo update
 
 ```shell
 cargo doc --open # 生成当前项目的依赖的api文档
+```
+
+测试
+
+```shell
+# 生成依赖库项目
+cargo new --lib project_name
+cd ./project_name
+# 运行测试
+cargo test
+cargo test <function_name>
+cargo test -- --test-threads=1 # 禁用多线程
+cargo test -- --nocapture # 截获打印输出
+cargo test -- --ignored # 只运行被忽略的测试
+cargo test --test integration_test # 测试集成文件
 ```
 
 一般使用 `vscode`或 `clion`进行编写，写好程序后，在 IDE 的终端里面输入 `cargo run`进行运行程序。
