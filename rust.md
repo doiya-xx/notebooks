@@ -57,6 +57,7 @@ cargo build
 
 ```shell
 cargo run
+cargo run > output.txt # 将标准输出输入到output.txt文件中
 ```
 
 对项目进行构建，但是不生成可执行文件
@@ -78,10 +79,12 @@ cargo run --release
 cargo update
 ```
 
-查看依赖 api 文档
+查看 api 文档
 
 ```shell
-cargo doc --open # 生成当前项目的依赖的api文档
+# 使用`///`来编写文件，支持markdown，编译后会生成html页面
+# 存放在`target/doc/project_name/`下
+cargo doc --open # 生成当前项目的api文档
 ```
 
 测试
@@ -100,6 +103,68 @@ cargo test --test integration_test # 测试集成文件
 ```
 
 一般使用 `vscode`或 `clion`进行编写，写好程序后，在 IDE 的终端里面输入 `cargo run`进行运行程序。
+
+在[https://crates.io/me](http://crates.io/me)上生成自己的`api_token`。保存在本地的`~/.cargo/credentials`文件中。
+
+```shell
+cargo login api_token # 将token保存在本地
+```
+
+将项目打包上传
+
+1. 首先在`toml`中设置一个唯一的项目名称
+2. 其次设置其他信息
+3. 然后将项目中引用项目名称的地方进行修改
+4. 项目如果进行了版本管理，还需要进行提交
+5. 最后发布
+
+```shell
+cargo pulish
+```
+
+创建工作空间
+
+工作空间可以包括一个二进制项目和两个库。其中二进制项目提供主要跟你，并且依赖另外的两个库。
+
+```shell
+mkdir add
+cd add/
+```
+
+创建`Cargo.toml`
+
+```toml
+[workspace]
+members = [
+   "adder",
+]
+```
+
+创建二进制crate
+
+```shell
+cargo new adder
+cargo build
+```
+
+在工作空间下，子库没有自己的`target`目录
+
+在工作空间下运行项目
+
+```shell
+cargo run # 运行全部
+cargo run -p adder # 使用参数p和指定项目名称
+cargo test # 测试全部
+cargo test -p add-one # 指定测试
+```
+
+但是在发布crate的时候，需要进入每一个库进行各自发布
+
+从`Crates.io`安装二进制文件
+
+```shell
+cargo install ripgrep
+```
 
 ## Reference
 
