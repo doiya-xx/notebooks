@@ -34,6 +34,22 @@ rustc --version
 cargo --version
 ```
 
+安装pc-window-msvc版本
+
+下载msvc
+
+地址：[https://visualstudio.microsoft.com/zh-hans/visual-cpp-build-tools/](https://visualstudio.microsoft.com/zh-hans/visual-cpp-build-tools/)
+
+安装组件：
+
+- MSVC
+- windows 10 SDK
+- CMake
+
+启动 rustup-init.exe
+
+由于之前就自定义安装路径，这次可以直接默认安装。
+
 ## Cargo
 
 创建一个名为`project_name`的项目文件。
@@ -154,6 +170,7 @@ cargo build
 ```shell
 cargo run # 运行全部
 cargo run -p adder # 使用参数p和指定项目名称
+cargo run --bin p_rc # 运行指定二进制程序
 cargo test # 测试全部
 cargo test -p add-one # 指定测试
 ```

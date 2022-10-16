@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <title>Rust Programming Language</title>
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+    <h1 class="title">Rust Programming Language</h1>
+    <nav id="TOC"><ul>
+<li><a href="#install">0.1 Install</a><ul>
+<li><a href="#windows">0.1.1 Windows</a><ul></ul></li></ul></li>
+<li><a href="#cargo">0.2 Cargo</a><ul></ul></li>
+<li><a href="#reference">0.3 Reference</a><ul></ul></li>
+<li><a href="#rust">0.4 Rust</a><ul></ul></li></ul></nav><p><code>rust</code>基于<code>c++</code>的一种语言，语法和<code>c++</code>类似，但是在内存管理有优势。也是一种预编译语言，需要使用<code>c++</code>的编译器。</p>
+<h2 id="install"><a href="#install">0.1 Install</a></h2><h3 id="windows"><a href="#windows">0.1.1 Windows</a></h3>
+<p>（1）存在两个版本，可以选择安装<code>MinGW/MSVC</code></p>
+<p>（2）下载<code>rustup-init.exe</code>。</p>
+<p>下载地址：<a href="https://www.rust-lang.org/zh-CN/tools/install">https://www.rust-lang.org/zh-CN/tools/install</a></p>
+<p><code>rustup</code>是<code>rust</code>的环境版本管理工具。</p>
+<p>（3）<code>rustup</code>自定义安装路径：</p>
+<ol>
+<li>创建存放 rust 环境目录<code>Rust/</code>；</li>
+<li>进入目录，创建<code>.cargo/</code>和<code>.rustup/</code>目录，这两个目录就是工具的安装路径；</li>
+<li>配置系统环境变量。创建两个系统环境变量<code>CARGO_HOME</code>和<code>RUSTUP_HOME</code>，两个系统环境变量的位置分别为第二步创建的两个目录。然后在<code>PATH</code>中添加<code>%CARGO_HOME%</code>和<code>%RUSTUP_HOME%</code>；</li>
+<li>启动<code>rustup-init.exe</code>，默认下载和使用 MSVC 版本的 rust。输入 3 选择使用 GNU 版本；</li>
+<li>然后输入 2，进行手动配置下载；
+<ol>
+<li>输入<code>x86_64-pc-windows-gnu</code>版本</li>
+<li>输入<code>stable</code>版本</li>
+<li>输入<code>complete</code>进行完整安装</li>
+<li>输入<code>Y</code>允许修改系统环境变量</li>
+</ol>
+</li>
+<li>最后输入 1 按照配置进行安装。</li>
+</ol>
+<p>（4）检查</p>
+<div class="example-wrap"><pre class="language-shell"><code>rustc --version
+cargo --version</code></pre></div><h2 id="cargo"><a href="#cargo">0.2 Cargo</a></h2>
+<p>创建一个名为<code>project_name</code>的项目文件。</p>
+<div class="example-wrap"><pre class="language-shell"><code>cargo new project_name
+cd ./project_name # 进入项目目录
+cargo new --lib restaurant</code></pre></div>
+<p>使用 debug 模式构建项目，生成 <code>project_name.exe</code>可执行文件。</p>
+<div class="example-wrap"><pre class="language-shell"><code>cargo build
+./target/debug/project_name.exe</code></pre></div>
+<p>使用 debug 模式构建并运行项目</p>
+<div class="example-wrap"><pre class="language-shell"><code>cargo run
+cargo run &gt; output.txt # 将标准输出输入到output.txt文件中</code></pre></div>
+<p>对项目进行构建，但是不生成可执行文件</p>
+<div class="example-wrap"><pre class="language-shell"><code>cargo check</code></pre></div>
+<p>使用发布模式进行构建，生成的 <code>project_name.exe</code>运行速度更快。</p>
+<div class="example-wrap"><pre class="language-shell"><code>cargo build --release
+cargo run --release</code></pre></div>
+<p>更新项目依赖版本</p>
+<div class="example-wrap"><pre class="language-shell"><code>cargo update</code></pre></div>
+<p>查看 api 文档</p>
+<div class="example-wrap"><pre class="language-shell"><code>cargo doc --open # 生成当前项目的api文档</code></pre></div>
+<p>测试</p>
+<div class="example-wrap"><pre class="language-shell"><code>cargo new --lib project_name
+cd ./project_name
+cargo test
+cargo test &lt;function_name&gt;
+cargo test -- --test-threads=1 # 禁用多线程
+cargo test -- --nocapture # 截获打印输出
+cargo test -- --ignored # 只运行被忽略的测试
+cargo test --test integration_test # 测试集成文件</code></pre></div>
+<p>一般使用 <code>vscode</code>或 <code>clion</code>进行编写，写好程序后，在 IDE 的终端里面输入 <code>cargo run</code>进行运行程序。</p>
+<p>在<a href="http://crates.io/me">https://crates.io/me</a>上生成自己的<code>api_token</code>。保存在本地的<code>~/.cargo/credentials</code>文件中。</p>
+<div class="example-wrap"><pre class="language-shell"><code>cargo login api_token # 将token保存在本地</code></pre></div>
+<p>将项目打包上传</p>
+<ol>
+<li>首先在<code>toml</code>中设置一个唯一的项目名称</li>
+<li>其次设置其他信息</li>
+<li>然后将项目中引用项目名称的地方进行修改</li>
+<li>项目如果进行了版本管理，还需要进行提交</li>
+<li>最后发布</li>
+</ol>
+<div class="example-wrap"><pre class="language-shell"><code>cargo pulish</code></pre></div>
+<p>创建工作空间</p>
+<p>工作空间可以包括一个二进制项目和两个库。其中二进制项目提供主要跟你，并且依赖另外的两个库。</p>
+<div class="example-wrap"><pre class="language-shell"><code>mkdir add
+cd add/</code></pre></div>
+<p>创建<code>Cargo.toml</code></p>
+<div class="example-wrap"><pre class="language-toml"><code>[workspace]
+members = [
+   &quot;adder&quot;,
+]</code></pre></div>
+<p>创建二进制crate</p>
+<div class="example-wrap"><pre class="language-shell"><code>cargo new adder
+cargo build</code></pre></div>
+<p>在工作空间下，子库没有自己的<code>target</code>目录</p>
+<p>在工作空间下运行项目</p>
+<div class="example-wrap"><pre class="language-shell"><code>cargo run # 运行全部
+cargo run -p adder # 使用参数p和指定项目名称
+cargo run --bin p_rc # 运行指定二进制程序
+cargo test # 测试全部
+cargo test -p add-one # 指定测试</code></pre></div>
+<p>但是在发布crate的时候，需要进入每一个库进行各自发布</p>
+<p>从<code>Crates.io</code>安装二进制文件</p>
+<div class="example-wrap"><pre class="language-shell"><code>cargo install ripgrep</code></pre></div><h2 id="reference"><a href="#reference">0.3 Reference</a></h2>
+<p>官方英文文档地址：<a href="https://www.rust-lang.org/">https://www.rust-lang.org/</a></p>
+<p>Rust Programming language: <a href="https://doc.rust-lang.org/book/">https://doc.rust-lang.org/book/</a></p>
+<p>中文翻译版本文档地址：<a href="https://www.rustwiki.org.cn/">https://www.rustwiki.org.cn/</a></p>
+<p>Rust 程序设计语言：<a href="https://www.rustwiki.org.cn/zh-CN/book/">https://www.rustwiki.org.cn/zh-CN/book/</a></p>
+<p>Rust 圣经：<a href="https://course.rs/about-book.html">https://course.rs/about-book.html</a></p>
+<h2 id="rust"><a href="#rust">0.4 Rust</a></h2>
+<p>引入依赖。在 <code>Cargo.toml</code>中写入依赖以及版本，然后重新构建项目。</p>
+<div class="example-wrap"><pre class="language-toml"><code>[dependencies]
+rand = &quot;0.8.5&quot;</code></pre></div>
+<p>下载依赖</p>
+<div class="example-wrap"><pre class="language-shell"><code>cargo build</code></pre></div>
+<p>区分语句和表达式的区别：</p>
+<p>结尾没有分号的是表达式，函数是表达式。</p>
+<p>代码块的返回值是最后一个表达式的值</p>
+
+    
+</body>
+</html>
